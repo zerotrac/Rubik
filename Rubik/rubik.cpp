@@ -356,7 +356,7 @@ inline void EdgeAdjustment(RUBIK &rubik)
 			}
 			Operation(COMMAND(1, "U"), rubik);
 		}
-		Operation(COMMAND(14, "RuRURURururr"), rubik);
+		Operation(COMMAND(12, "RuRURURururr"), rubik);
 	}
 	printf("\n");
 }
