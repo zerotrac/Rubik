@@ -380,6 +380,11 @@ int main()
 	
 	printf("魔方初始状态:\n");
 	rubik.Print();
+	printf("魔方操作解释：\n");
+	printf("F/B/L/R/U/D表示将魔方的前/后/左/右/上/下面顺时针旋转90°\n");
+	printf("f/b/l/r/u/d表示将魔方的前/后/左/右/上/下面逆时针旋转90°\n");
+	printf("H表示将魔方沿U/D方向整体旋转180°\n");
+	printf("V表示将魔方沿L/R方向整体旋转180°\n\n");
 	LayerOneCross(rubik);
 	//rubik.Print();
 	LayerOneCover(rubik);
