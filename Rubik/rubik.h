@@ -54,10 +54,11 @@ struct TUPLE
 inline void Rotate_Surface(RUBIK &rubik, int id);
 inline void Rotate_Edge(RUBIK &rubik, int id);
 inline void Update(RUBIK &rubik, int id, int tm);
-inline void Operation(COMMAND command, RUBIK &rubik);
+inline void Operation(COMMAND command, RUBIK &rubik, int &hActive, int &vActive);
 
 inline int Translate(int a, int b);
 inline int Translate(int a, int b, int c);
+inline char opTranslate(int op, int hActive, int vActive);
 
 inline bool Complete(RUBIK &rubik);
 inline bool Complete(RUBIK &rubik, int n);
@@ -160,7 +161,7 @@ inline void Update(RUBIK &rubik, int id, int tm)
 	}
 }
 
-inline void Operation(COMMAND command, RUBIK &rubik)
+inline void Operation(COMMAND command, RUBIK &rubik, int &hActive, int &vActive)
 {
 	char sigma[] = " FBLRUDHV"; 
 	
@@ -174,10 +175,12 @@ inline void Operation(COMMAND command, RUBIK &rubik)
 			if (command.st[k] == sigma[i])
 			{
 				Update(rubik, i, 1);
+				std::cout << opTranslate(i, hActive, vActive);
 			}
 			else if (toupper(command.st[k]) == sigma[i])
 			{
 				Update(rubik, i, 3);
+				std::cout << opTranslate(i + 6, hActive, vActive);
 			}
 		}
 		if (command.st[k] == sigma[7])
@@ -185,16 +188,16 @@ inline void Operation(COMMAND command, RUBIK &rubik)
 			Update(rubik, 5, 1);
 			Update(rubik, 6, 3);
 			Update(rubik, 7, 1);
+			hActive++;
 		}
 		if (command.st[k] == sigma[8]) 
 		{
 			Update(rubik, 3, 3);
 			Update(rubik, 4, 1);
 			Update(rubik, 8, 1);
+			vActive++;
 		}
 	}
-	
-	std::cout << command.st;
 }
 
 inline int Translate(int a, int b)
@@ -210,6 +213,15 @@ inline int Translate(int a, int b, int c)
 	int S = std::min(std::min(a, b), c);
 	int M = a + b + c - B - S;
 	return B * 100 + S * 10 + M;
+}
+
+inline char opTranslate(int op, int hActive, int vActive)
+{
+	char image[8][14] = {" FBLRUDfblrud", " RLFBUDrlfbud", " BFRLUDbfrlud", " LRBFUDlrbfud",
+						 " BFLRDUbflrdu", " RLBFDUrlbfdu", " FBRLDUfbrldu", " LRFBDUlrfbdu"};
+	int label = (vActive > 0) * 4 + (hActive % 4);
+	//printf("char = %d %c\n", image[label][op]);
+	return image[label][op];
 }
 
 inline bool Complete(RUBIK &rubik)

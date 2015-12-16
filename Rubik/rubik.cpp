@@ -3,9 +3,18 @@
 using namespace std;
 
 char ch;
+int hActive = 0, vActive = 0;
 
 //FBLRUD
 //012345
+
+inline void LayerOneCross(RUBIK &rubik);
+inline void LayerOneCover(RUBIK &rubik);
+inline void LayerTwoCover(RUBIK &rubik);
+inline void LayerThreeCross(RUBIK &rubik);
+inline void LayerThreeCover(RUBIK &rubik);
+inline void CornerAdjustment(RUBIK &rubik);
+inline void EdgeAdjustment(RUBIK &rubik);
 
 inline void LayerOneCross(RUBIK &rubik)
 {
@@ -19,76 +28,77 @@ inline void LayerOneCross(RUBIK &rubik)
 		ec = rubik.color[5][1][2] * 10 + rubik.color[2][3][2];
 		if (ec == ec1 || ec == ec2)
 		{
-			Operation(COMMAND(6, "BBDDFF"), rubik);
+			Operation(COMMAND(6, "BBDDFF"), rubik, hActive, vActive);
 		}
 		
 		ec = rubik.color[5][2][1] * 10 + rubik.color[3][1][2];
 		if (ec == ec1 || ec == ec2)
 		{
-			Operation(COMMAND(5, "LLDFF"), rubik);
+			Operation(COMMAND(5, "LLDFF"), rubik, hActive, vActive);
 		}
 		
 		ec = rubik.color[5][2][3] * 10 + rubik.color[4][1][2];
 		if (ec == ec1 || ec == ec2)
 		{
-			Operation(COMMAND(5, "RRdFF"), rubik);
+			Operation(COMMAND(5, "RRdFF"), rubik, hActive, vActive);
 		}
 		
 		ec = rubik.color[1][2][3] * 10 + rubik.color[4][2][1];
 		if (ec == ec1 || ec == ec2)
 		{
-			Operation(COMMAND(1, "f"), rubik);
+			Operation(COMMAND(1, "f"), rubik, hActive, vActive);
 		}
 		
 		ec = rubik.color[4][2][3] * 10 + rubik.color[2][2][3];
 		if (ec == ec1 || ec == ec2)
 		{
-			Operation(COMMAND(5, "RdFFr"), rubik);
+			Operation(COMMAND(5, "RdFFr"), rubik, hActive, vActive);
 		}
 		
 		ec = rubik.color[2][2][1] * 10 + rubik.color[3][2][1];
 		if (ec == ec1 || ec == ec2)
 		{
-			Operation(COMMAND(6, "lDFFL"), rubik);
+			Operation(COMMAND(6, "lDFFL"), rubik, hActive, vActive);
 		}
 		
 		ec = rubik.color[3][2][3] * 10 + rubik.color[1][2][1];
 		if (ec == ec1 || ec == ec2)
 		{
-			Operation(COMMAND(1, "F"), rubik);
+			Operation(COMMAND(1, "F"), rubik, hActive, vActive);
 		}
 		
 		ec = rubik.color[6][1][2] * 10 + rubik.color[1][3][2];
 		if (ec == ec1 || ec == ec2)
 		{
-			Operation(COMMAND(2, "FF"), rubik);
+			Operation(COMMAND(2, "FF"), rubik, hActive, vActive);
 		}
 		
 		ec = rubik.color[6][2][1] * 10 + rubik.color[3][3][2];
 		if (ec == ec1 || ec == ec2)
 		{
-			Operation(COMMAND(3, "DFF"), rubik);
+			Operation(COMMAND(3, "DFF"), rubik, hActive, vActive);
 		}
 		
 		ec = rubik.color[6][2][3] * 10 + rubik.color[4][3][2];
 		if (ec == ec1 || ec == ec2)
 		{
-			Operation(COMMAND(3, "dFF"), rubik);
+			Operation(COMMAND(3, "dFF"), rubik, hActive, vActive);
 		}
 		
 		ec = rubik.color[6][3][2] * 10 + rubik.color[2][1][2];
 		if (ec == ec1 || ec == ec2)
 		{
-			Operation(COMMAND(4, "DDFF"), rubik);
+			Operation(COMMAND(4, "DDFF"), rubik, hActive, vActive);
 		}
 		
 		ec = rubik.color[5][3][2] * 10 + rubik.color[1][1][2];
 		if (ec == ec2)
 		{
-			Operation(COMMAND(4, "fUlu"), rubik);
+			Operation(COMMAND(4, "fUlu"), rubik, hActive, vActive);
 		}
 
-		Operation(COMMAND(1, "H"), rubik);
+		Operation(COMMAND(1, "H"), rubik, hActive, vActive);
+		printf(" ");
 	}
 	printf("\n");
 }
@@ -105,61 +115,60 @@ inline void LayerOneCover(RUBIK &rubik)
 		ec = Translate(rubik.color[5][3][3], rubik.color[1][1][3], rubik.color[4][1][1]);
 		if (ec == ec1)
 		{
-			Operation(COMMAND(4, "rdRD"), rubik);
+			Operation(COMMAND(4, "rdRD"), rubik, hActive, vActive);
 		}
 		
 		ec = Translate(rubik.color[5][1][3], rubik.color[4][1][3], rubik.color[2][3][3]);
 		if (ec == ec1)
 		{
-			Operation(COMMAND(3, "Rdr"), rubik);
+			Operation(COMMAND(3, "Rdr"), rubik, hActive, vActive);
 		}
 		
 		ec = Translate(rubik.color[5][1][1], rubik.color[2][3][1], rubik.color[3][1][1]);
 		if (ec == ec1)
 		{
-			Operation(COMMAND(4, "lDLD"), rubik);
+			Operation(COMMAND(4, "lDLD"), rubik, hActive, vActive);
 		}
 		
 		ec = Translate(rubik.color[5][3][1], rubik.color[3][1][3], rubik.color[1][1][1]);
 		if (ec == ec1)
 		{
-			Operation(COMMAND(3, "LDl"), rubik);
+			Operation(COMMAND(3, "LDl"), rubik, hActive, vActive);
 		}
 		
 		ec = Translate(rubik.color[6][1][1], rubik.color[3][3][3], rubik.color[1][3][1]);
 		if (ec == ec1)
 		{
-			Operation(COMMAND(1, "D"), rubik);
+			Operation(COMMAND(1, "D"), rubik, hActive, vActive);
 		}
 		
 		ec = Translate(rubik.color[6][3][3], rubik.color[4][3][3], rubik.color[2][1][3]);
 		if (ec == ec1)
 		{
-			Operation(COMMAND(1, "d"), rubik);
+			Operation(COMMAND(1, "d"), rubik, hActive, vActive);
 		}
 		
 		ec = Translate(rubik.color[6][3][1], rubik.color[2][1][1], rubik.color[3][3][1]);
 		if (ec == ec1)
 		{
-			Operation(COMMAND(2, "DD"), rubik);
+			Operation(COMMAND(2, "DD"), rubik, hActive, vActive);
 		}
 		
 		while (rubik.color[5][2][2] != rubik.color[5][3][3] ||
 			   rubik.color[1][2][2] != rubik.color[1][1][3] ||
 			   rubik.color[4][2][2] != rubik.color[4][1][1])
 		{
-			Operation(COMMAND(4, "rdRD"), rubik);
+			Operation(COMMAND(4, "rdRD"), rubik, hActive, vActive);
 		}
-		Operation(COMMAND(1, "H"), rubik);
+		Operation(COMMAND(1, "H"), rubik, hActive, vActive);
+		printf(" ");
 	}
 	printf("\n");
 }
 
 inline void ToptoBottom(RUBIK &rubik)
 {
-	printf("将魔方垂直旋转180°: ");
-	Operation(COMMAND(2, "VV"), rubik);
-	printf("\n");
+	Operation(COMMAND(2, "VV"), rubik, hActive, vActive);
 }
 
 inline void LayerTwoCover(RUBIK &rubik)
@@ -171,26 +180,27 @@ inline void LayerTwoCover(RUBIK &rubik)
 		for (int i = 1; i <= 4; i++)
 		{
 			int ec = Translate(rubik.color[1][2][3], rubik.color[4][2][1]);
-			if (ec1 == ec) Operation(COMMAND(8, "URurufUF"), rubik);
-			Operation(COMMAND(1, "H"), rubik);
+			if (ec1 == ec) Operation(COMMAND(8, "URurufUF"), rubik, hActive, vActive);
+			Operation(COMMAND(1, "H"), rubik, hActive, vActive);
 		}
 		for (int i = 1; i <= 4; i++)
 		{
 			if (rubik.color[1][2][2] == rubik.color[1][1][2] &&
 				rubik.color[4][2][2] == rubik.color[5][3][2])
 			{
-				Operation(COMMAND(8, "URurufUF"), rubik);
+				Operation(COMMAND(8, "URurufUF"), rubik, hActive, vActive);
 				break;
 			}
 			if (rubik.color[4][2][2] == rubik.color[4][1][2] &&
 				rubik.color[1][2][2] == rubik.color[5][2][3])
 			{
-				Operation(COMMAND(8, "ufUFURur"), rubik);
+				Operation(COMMAND(8, "ufUFURur"), rubik, hActive, vActive);
 				break;
 			}
-			Operation(COMMAND(1, "U"), rubik);
+			Operation(COMMAND(1, "U"), rubik, hActive, vActive);
 		}
-		Operation(COMMAND(1, "H"), rubik);
+		Operation(COMMAND(1, "H"), rubik, hActive, vActive);
+		printf(" ");
 	}
 	printf("\n");
 }
@@ -215,7 +225,7 @@ inline void LayerThreeCross(RUBIK &rubik)
 		{
 			while ((rubik.color[1][1][2] == topcolor) + (rubik.color[4][1][2] == topcolor) != 2)
 			{
-				Operation(COMMAND(1, "U"), rubik);
+				Operation(COMMAND(1, "U"), rubik, hActive, vActive);
 			}
 		}
 		else if (topcnt == 2)
@@ -223,18 +233,18 @@ inline void LayerThreeCross(RUBIK &rubik)
 			for (int i = 1; i <= 4; i++)
 			{
 				if ((rubik.color[5][2][3] == topcolor) + (rubik.color[5][3][2] == topcolor) == 2) break;
-				Operation(COMMAND(1, "U"), rubik);
+				Operation(COMMAND(1, "U"), rubik, hActive, vActive);
 			}
 			if ((rubik.color[5][2][3] == topcolor) + (rubik.color[5][3][2] == topcolor) != 2)
 			{
 				for (int i = 1; i <= 4; i++)
 				{
 					if ((rubik.color[5][2][1] == topcolor) + (rubik.color[5][2][3] == topcolor) + (rubik.color[1][1][2] == topcolor) == 3) break;
-					Operation(COMMAND(1, "U"), rubik);
+					Operation(COMMAND(1, "U"), rubik, hActive, vActive);
 				}
 			}
 		}
-		Operation(COMMAND(6, "FRUruf"), rubik);
+		Operation(COMMAND(6, "FRUruf"), rubik, hActive, vActive);
 	}
 	printf("\n");
 }
@@ -256,24 +266,24 @@ inline void LayerThreeCover(RUBIK &rubik)
 		{
 			while (rubik.color[3][1][3] != topcolor)
 			{
-				Operation(COMMAND(1, "U"), rubik);
+				Operation(COMMAND(1, "U"), rubik, hActive, vActive);
 			}
 		}
 		else if (topcnt == 6)
 		{
 			while (rubik.color[5][3][1] != topcolor)
 			{
-				Operation(COMMAND(1, "U"), rubik);
+				Operation(COMMAND(1, "U"), rubik, hActive, vActive);
 			}
 		}
 		else if (topcnt == 7)
 		{
 			while (rubik.color[1][1][1] != topcolor)
 			{
-				Operation(COMMAND(1, "U"), rubik);
+				Operation(COMMAND(1, "U"), rubik, hActive, vActive);
 			}
 		}
-		Operation(COMMAND(8, "RUrURUUr"), rubik);
+		Operation(COMMAND(8, "RUrURUUr"), rubik, hActive, vActive);
 	}
 	printf("\n");
 }
@@ -295,7 +305,7 @@ inline void CornerAdjustment(RUBIK &rubik)
 				flag = true;
 				break;
 			}
-			Operation(COMMAND(1, "U"), rubik);
+			Operation(COMMAND(1, "U"), rubik, hActive, vActive);
 		}
 		if (flag) break;
 		if (!flag)
@@ -311,17 +321,17 @@ inline void CornerAdjustment(RUBIK &rubik)
 						{
 							for (int k = 1; k < j; k++)
 							{
-								Operation(COMMAND(1, "u"), rubik);
+								Operation(COMMAND(1, "u"), rubik, hActive, vActive);
 							}
 							break;
 						}
-						Operation(COMMAND(1, "H"), rubik);
+						Operation(COMMAND(1, "H"), rubik, hActive, vActive);
 					}
 					break;
 				}
-				Operation(COMMAND(1, "U"), rubik);
+				Operation(COMMAND(1, "U"), rubik, hActive, vActive);
 			}
-			Operation(COMMAND(12, "RbRFFrBRFFrr"), rubik);
+			Operation(COMMAND(12, "RbRFFrBRFFrr"), rubik, hActive, vActive);
 		}
 	}
 	printf("\n");
@@ -337,7 +347,7 @@ inline void EdgeAdjustment(RUBIK &rubik)
 		{
 			if (Complete(rubik, 1))
 			{
-				Operation(COMMAND(2, "HH"), rubik);
+				Operation(COMMAND(2, "HH"), rubik, hActive, vActive);
 				break;
 			}
 			if (Complete(rubik, 2))
@@ -346,17 +356,17 @@ inline void EdgeAdjustment(RUBIK &rubik)
 			}
 			if (Complete(rubik, 3))
 			{
-				Operation(COMMAND(3, "HHH"), rubik);
+				Operation(COMMAND(1, "H"), rubik, hActive, vActive);
 				break;
 			}
 			if (Complete(rubik, 4))
 			{
-				Operation(COMMAND(1, "H"), rubik);
+				Operation(COMMAND(3, "HHH"), rubik, hActive, vActive);
 				break;
 			}
-			Operation(COMMAND(1, "U"), rubik);
+			Operation(COMMAND(1, "U"), rubik, hActive, vActive);
 		}
-		Operation(COMMAND(12, "RuRURURururr"), rubik);
+		Operation(COMMAND(12, "RuRURURururr"), rubik, hActive, vActive);
 	}
 	printf("\n");
 }
@@ -367,7 +377,6 @@ int main()
 	freopen("rubik.out", "w", stdout);
 	
 	RUBIK rubik;
-	
 	for (int i = 1; i <= 6; i++)
 	{
 		for (int j = 1; j <= 3; j++)
@@ -377,28 +386,19 @@ int main()
 				rubik.color[i][j][k] = ch - 48;
 			}
 	}
-	
+
 	printf("魔方初始状态:\n");
 	rubik.Print();
 	printf("魔方操作解释：\n");
 	printf("F/B/L/R/U/D表示将魔方的前/后/左/右/上/下面顺时针旋转90°\n");
-	printf("f/b/l/r/u/d表示将魔方的前/后/左/右/上/下面逆时针旋转90°\n");
-	printf("H表示将魔方沿U/D方向整体旋转180°\n");
-	printf("V表示将魔方沿L/R方向整体旋转180°\n\n");
+	printf("f/b/l/r/u/d表示将魔方的前/后/左/右/上/下面逆时针旋转90°\n\n");
 	LayerOneCross(rubik);
-	//rubik.Print();
 	LayerOneCover(rubik);
-	//rubik.Print();
 	ToptoBottom(rubik);
-	//rubik.Print();
 	LayerTwoCover(rubik);
-	//rubik.Print();
 	LayerThreeCross(rubik);
-	//rubik.Print();
 	LayerThreeCover(rubik);
-	//rubik.Print();
 	CornerAdjustment(rubik);
-	//rubik.Print();
 	EdgeAdjustment(rubik);
 	printf("\n魔方最终状态:\n");
 	rubik.Print();
